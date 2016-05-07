@@ -10,21 +10,24 @@ library(shiny)
 shinyUI(fluidPage(
 
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("Student Alcohol Consumption"),
 
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+        selectInput("variable", "Variable:",
+                    list("School" = "school", 
+                         "Gender" = "sex", 
+                         "Age" = "age")),
+        
+        checkboxInput("outliers", "Show outliers", FALSE)
     ),
 
     # Show a plot of the generated distribution
     mainPanel(
-      plotOutput("distPlot")
+        h3(textOutput("caption")),
+        
+        plotOutput("d3Plot")
     )
   )
 ))
