@@ -10,24 +10,27 @@ library(shiny)
 shinyUI(fluidPage(
 
   # Application title
-  titlePanel("Student Alcohol Consumption"),
+  titlePanel("Diabetes Prediction Function"),
+  headerPanel(h3('Please specify the various inputs here')),
 
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(
-    sidebarPanel(
-        selectInput("variable", "Variable:",
-                    list("School" = "school", 
-                         "Gender" = "sex", 
-                         "Age" = "age")),
-        
-        checkboxInput("outliers", "Show outliers", FALSE)
-    ),
-
-    # Show a plot of the generated distribution
-    mainPanel(
-        h3(textOutput("caption")),
-        
-        plotOutput("d3Plot")
-    )
+  inputPanel(
+      sliderInput(inputId = 'age', label = 'The age of the patient', value = 40, min = 10, max = 100, step = 1),
+      sliderInput(inputId = 'weight', label = 'The weight of the patient', value = 150, min = 80, max = 500, step = 0.2),
+      sliderInput(inputId = 'waist', label = 'The waist measurement of the patient in inches', value = 30, min = 20, max = 60, step = 1),
+      numericInput(inputId = 'glucose', label = 'Glucose mg/dl', value = 90, min = 50, max = 200, step = 5),
+      checkboxInput(inputId = 'famhist', label = 'History of diabetes in family?', value = FALSE),
+      submitButton('Submit')
+  ),
+  mainPanel(
+      h3('Results of prediction'),
+      h4('You entered'),
+      verbatimTextOutput("ageValue"),
+      verbatimTextOutput("weightValue"),
+      verbatimTextOutput("waistValue"),
+      verbatimTextOutput("glucoseValue"),
+      verbatimTextOutput("famhistValue"),
+      h4('Which resulted in a prediction of '),
+      verbatimTextOutput("prediction"),
+      tags$footer("This prediction function is provided for illustration purposes only and is not intended for use as a substitute for trained medical examination or evaluation. For serious diabetes care, please contact your primary care physician or other medical professional.")
   )
 ))
